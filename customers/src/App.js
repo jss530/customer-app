@@ -1,22 +1,41 @@
 import React, { Component } from 'react';
 import './App.css';
+// import {CSV}
 
 class App extends Component {
 
-  const ImportFromFile = () => {
-    let fileReader;
+// let records = (need to import your CSV here)
 
-    const handleFileRead = (e) => {
-      const content = fileReader.result;
-      //finish content action here
+let output = records.map(record => {
+
+	let arr = record.split(',')
+
+	return
+  {"name": arr[0],
+    "emails": [
+        {
+          "type": "home",
+          "email": arr[1],
+        }
+      ],
+    "phones": [
+        {
+          "type": "home",
+          "phone": parseInt(arr[2])
+        },
+        {
+          "type": "work",
+          "phone": parseInt(arr[3])
+        }
+      ],
+     "birthdayAt": arr[4],
+     "tags": arr[5]
     };
 
-    const handleFileChosen = (file) => {
-      fileReader = new FileReader();
-      fileReader.onloadend = handleFileRead;
-      fileReader.readAsText(file);
-    };
+	}
+})
 
+console.log(output)
 
   render() {
     return (
@@ -30,11 +49,11 @@ class App extends Component {
 
         <div className="upload">
           <input type='file' id='file' className='input-file' accept='.csv'
-          onChange={e => handleFileChosen(e.target.files[0])} />
+          onChange={this.importFromFile} />
         </div>
       </div>
     );
-  }
+  };
 }
 
 export default App;
