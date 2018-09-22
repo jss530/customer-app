@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
+const csv =require('./files/data.csv');
+
 class App extends Component {
 
-  importFromFile = csv => {
-    let csv =require('./files/data.csv');
+  importFromFile = () => {
     let output = csv.map(record => {
     let arr = record.split(',')
 
@@ -19,17 +20,18 @@ class App extends Component {
       "phones": [
           {
             "type": "home",
-            "phone": parseInt(arr[2])
+            "phone": arr[2]
           },
           {
             "type": "work",
-            "phone": parseInt(arr[3])
+            "phone": arr[3]
           }
         ],
        "birthdayAt": arr[4],
        "tags": arr[5]
       };
   	});
+    return output;
   };
 
   render() {
@@ -43,8 +45,7 @@ class App extends Component {
         </p>
 
         <div className="upload">
-          <input type='file' id='file' className='input-file' accept='.csv'
-          onChange={this.importFromFile} />
+          {this.importFromFile}
         </div>
       </div>
     );
