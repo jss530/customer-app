@@ -5,72 +5,43 @@ const Papa = require('papaparse');
 
 class App extends Component {
 
-  // activateJson(results) {
-  //
-  //   let output = results.map(record => {
-  //
-  //   let arr = record.split(',')
-  //   debugger;
-  //   return {
-  //     "name": arr[0],
-  //     "emails": [
-  //         {
-  //           "email": arr[1]
-  //         }
-  //       ],
-  //     "phones": [
-  //         {
-  //           "type": "home",
-  //           "phone": arr[2]
-  //         },
-  //         {
-  //           "type": "work",
-  //           "phone": arr[3]
-  //         }
-  //       ],
-  //      "tags": arr[4],
-  //      "birthdayAt": arr[5]
-  //     };
-  //   });
-  //   console.log(output);
-  // }
 
   parseFile(file) {
     var data;
 
     Papa.parse(file, {
      header: true,
-     complete: function(results, file) {
-	      console.log("Parsing complete:", results, file);
-
-        let output = results.data.map(record => {
-
-        return {
-          "name": record.name,
-          "emails": [
-              {
-                "email": record.email
-              }
-            ],
-          "phones": [
-              {
-                "type": "home",
-                "phone": record.homePhone
-              },
-              {
-                "type": "work",
-                "phone": record.workPhone
-              }
-            ],
-           "tags": record.customerType,
-           "birthdayAt": record.birthday
-          };
-
-        });
-        return output;
-      }
+     complete: this.activateJson
     })
   }
+
+  activateJson(results) {
+
+    let output = results.data.map(record => {
+
+    return {
+      "name": record.name,
+      "emails": [
+        {
+          "email": record.email
+        }
+      ],
+      "phones": [
+        {
+          "type": "home",
+          "phone": record.homePhone
+        },
+        {
+          "type": "work",
+          "phone": record.workPhone
+        }
+      ],
+      "tags": record.customerType,
+      "birthdayAt": record.birthday
+      };
+     });
+      console.log(output);
+    }
 
   render() {
     return (
