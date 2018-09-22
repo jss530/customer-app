@@ -7,6 +7,7 @@ class App extends Component {
 
   importFromFile = () => {
     let output = csv.map(record => {
+
     let arr = record.split(',')
 
   	return {
@@ -42,6 +43,7 @@ class App extends Component {
         </header>
 
         <p className="App-intro">
+
         </p>
 
         <div className="upload">
