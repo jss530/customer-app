@@ -5,24 +5,12 @@ const Papa = require('papaparse');
 
 class App extends Component {
 
-  parseFile = (file) => {
-
-    Papa.parse(file, {
-     header: true,
-     complete: function(results, file) {
-	      console.log("Parsing complete:", results, file);
-      }
-    });
-  }
-
-  // activateJson = () => {
+  // activateJson(results) {
   //
-  //   let records = csv.split(',');
-  //
-  //   let output = records.map(record => {
+  //   let output = results.map(record => {
   //
   //   let arr = record.split(',')
-  //
+  //   debugger;
   //   return {
   //     "name": arr[0],
   //     "emails": [
@@ -46,6 +34,43 @@ class App extends Component {
   //   });
   //   console.log(output);
   // }
+
+  parseFile(file) {
+    var data;
+
+    Papa.parse(file, {
+     header: true,
+     complete: function(results, file) {
+	      console.log("Parsing complete:", results, file);
+
+        let output = results.data.map(record => {
+
+        return {
+          "name": record.name,
+          "emails": [
+              {
+                "email": record.email
+              }
+            ],
+          "phones": [
+              {
+                "type": "home",
+                "phone": record.homePhone
+              },
+              {
+                "type": "work",
+                "phone": record.workPhone
+              }
+            ],
+           "tags": record.customerType,
+           "birthdayAt": record.birthday
+          };
+
+        });
+        return output;
+      }
+    })
+  }
 
   render() {
     return (
