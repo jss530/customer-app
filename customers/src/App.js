@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const csv =require('./files/data.csv');
+const csv='./files/Data-2.csv';
+
 
 class App extends Component {
 
-  importFromFile = () => {
+  activateJson = () => {
     let output = csv.map(record => {
 
     let arr = record.split(',')
 
-  	return {
+    return {
       "name": arr[0],
       "emails": [
           {
-            "type": "home",
-            "email": arr[1],
+            "email": arr[1]
           }
         ],
       "phones": [
@@ -31,9 +31,9 @@ class App extends Component {
        "birthdayAt": arr[4],
        "tags": arr[5]
       };
-  	});
-    return output;
-  };
+    });
+    console.log(output);
+  }
 
   render() {
     return (
@@ -42,13 +42,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to the Kustomer Guest Import Page!</h1>
         </header>
 
-        <p className="App-intro">
-
-        </p>
-
-        <div className="upload">
-          {this.importFromFile}
-        </div>
+        <button onClick={this.activateJson}>
+          Show J S O N
+        </button>
       </div>
     );
   };
