@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Data } from './datasets/Data-2.csv'
 
-const Papa = require("papaparse/papaparse.min.js");
-
+const Papa = require('papaparse');
 
 class App extends Component {
 
-  parseFile = () => {
-    const dataFile = Data
+  parseFile = (file) => {
 
-    Papa.parse(dataFile, {
+    Papa.parse(file, {
      header: true,
      complete: function(results, file) {
 	      console.log("Parsing complete:", results, file);
@@ -57,9 +54,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to the Kustomer Guest Import Page!</h1>
         </header>
 
-        <button onClick={this.parseFile}>
-          Show J S O N
-        </button>
+        <input type="file" id="csv-file" accept='.csv'
+        onChange={e => this.parseFile(e.target.files[0])}/>
+
       </div>
     );
   };
