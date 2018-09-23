@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import { postCustomers } from './actions/PostCustomers';
+// import { postCustomers } from './actions/PostCustomers';
+// import { connect } from 'react-redux';
 
 const Papa = require('papaparse');
 
@@ -41,7 +42,8 @@ class App extends Component {
       "birthdayAt": record.birthday
       };
      });
-      postCustomers(output);
+      // postCustomers(output);
+      console.log(output);
     }
 
   render() {
@@ -59,4 +61,5 @@ class App extends Component {
   };
 }
 
+// export default connect({ postCustomers })(App);
 export default App;

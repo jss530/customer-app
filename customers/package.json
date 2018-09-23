@@ -18,6 +18,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "csv-loader": "^3.0.2"
+    "csv-loader": "^3.0.2",
+    "gh-pages": "^2.0.0"
   }
 }
