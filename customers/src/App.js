@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { postCustomers } from './actions/PostCustomers';
 
 const Papa = require('papaparse');
 
@@ -40,7 +41,7 @@ class App extends Component {
       "birthdayAt": record.birthday
       };
      });
-      console.log(output);
+      postCustomers(output);
     }
 
   render() {
