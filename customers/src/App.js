@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-// import { postCustomers } from './actions/PostCustomers';
-// import { connect } from 'react-redux';
 
 const Papa = require('papaparse');
-const API_URL = process.env.REACT_APP_API_URL
-const MY_API_TOKEN = process.env.MY_BEARER_TOKEN;
-
-//NEXT: figure out how to make the function a promise, and see if you can put right from here! Otherwise, look into
-// just printing the result to the website so you can copy into Postman.
+const API_URL = process.env.REACT_APP_API_URL;
+const TOKEN = process.env.MY_BEARER_TOKEN;
 
 class App extends Component {
 
@@ -22,44 +17,49 @@ class App extends Component {
   }
 
   activateJson(results) {
+    let customer;
 
-    let output = results.data.map(record => {
+    let records = results.data.map(record => {
 
-    return {
-      "name": record.name,
-      "emails": [
+    let customer = {
+      name: record.name,
+      emails: [
         {
-          "email": record.email
+          email: record.email
         }
       ],
-      "phones": [
+      phones: [
         {
-          "type": "home",
-          "phone": record.homePhone
+          type: "home",
+          phone: record.homePhone
         },
         {
-          "type": "work",
-          "phone": record.workPhone
+          type: "work",
+          phone: record.workPhone
         }
       ],
-      "tags": record.customerType,
-      "birthdayAt": record.birthday
+      tags: [record.customerType],
+      // birthdayAt: Date.toISOString(record.birthday)
       };
+
+      console.log(customer);
+
+      fetch(`${API_URL}`, {
+       method: "POST",
+       headers: {
+         'Content-Type': 'application/json',
+         Authorization: `Bearer ${TOKEN}`
+        },
+       body: JSON.stringify(customer)
+       })
+       .then(function(response) {
+          response.json();
+       })
+       .catch(error => console.log(error));
     });
 
-       fetch(`${API_URL}`, {
-        method: "POST",
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${MY_API_TOKEN}`
-         },
-        body: JSON.stringify(output)
-      })
-        .catch(function(error) {
-        console.log('There has been a problem with your fetch operation: ', error.message);
-      });
-    }
+  }
+
 
   render() {
     return (
@@ -76,5 +76,4 @@ class App extends Component {
   };
 }
 
-// export default connect({ postCustomers })(App);
 export default App;
